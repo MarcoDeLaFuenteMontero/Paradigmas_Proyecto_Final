@@ -925,7 +925,7 @@ GameObject:
   - component: {fileID: 1040107700}
   - component: {fileID: 1040107699}
   - component: {fileID: 1040107698}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pared_Frontal_Izq
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1149,6 +1149,7 @@ GameObject:
   - component: {fileID: 1302228368}
   - component: {fileID: 1302228369}
   - component: {fileID: 1302228370}
+  - component: {fileID: 1302228371}
   m_Layer: 0
   m_Name: PerspectivePuzzle
   m_TagString: Untagged
@@ -1209,6 +1210,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PerspectiveProjector
   projectionCamera: {fileID: 2000555683}
   projectionMaterial: {fileID: 2100000, guid: 880c4de46e7d8de498e2fa0a49db587c, type: 2}
+--- !u!114 &1302228371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302228367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 475b2982197741e42a53450c6a34d1a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectionCameraCalibrator
+  playerCamera: {fileID: 330585545}
+  projectionCamera: {fileID: 2000555683}
 --- !u!1 &1302742403
 GameObject:
   m_ObjectHideFlags: 0
@@ -2088,7 +2103,7 @@ GameObject:
   - component: {fileID: 1863026565}
   - component: {fileID: 1863026564}
   - component: {fileID: 1863026563}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Suelo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2327,8 +2342,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2000555679}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.73, z: 0}
+  m_LocalRotation: {x: 0.028653828, y: -0.3306921, z: 0.010045688, w: 0.9432501}
+  m_LocalPosition: {x: -0.83938444, y: 1.7299998, z: -1.6707542}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
