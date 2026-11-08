@@ -334,7 +334,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 375
@@ -910,8 +910,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1033565915}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.023380013, y: -0.78378665, z: 0.029561821, w: 0.61988544}
-  m_LocalPosition: {x: 0.0020582685, y: 1.7299998, z: 0.1770554}
+  m_LocalRotation: {x: 0.014856878, y: -0.61527574, z: 0.011599076, w: 0.78808665}
+  m_LocalPosition: {x: 0.5268703, y: 1.7299998, z: -1.306411}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -934,7 +934,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 1
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -980,7 +980,7 @@ Camera:
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
-  m_projectionMatrixMode: 1
+  m_projectionMatrixMode: 0
   m_GateFitMode: 2
   m_FOVAxisMode: 0
   m_Iso: 200
@@ -1005,7 +1005,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: -10
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 256
@@ -1201,7 +1201,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PerspectiveProjector
   projectionCamera: {fileID: 2000555683}
+  projectionDepthCamera: {fileID: 1033565919}
   projectionMaterial: {fileID: 2100000, guid: 880c4de46e7d8de498e2fa0a49db587c, type: 2}
+  depthTexture: {fileID: 8400000, guid: 5d4a8a03de4c09744b44b6bea25bfa3e, type: 2}
 --- !u!114 &1302228371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2334,8 +2336,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2000555679}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.023380013, y: -0.78378665, z: 0.029561821, w: 0.61988544}
-  m_LocalPosition: {x: 0.0020582685, y: 1.7299998, z: 0.1770554}
+  m_LocalRotation: {x: 0.014856878, y: -0.61527574, z: 0.011599076, w: 0.78808665}
+  m_LocalPosition: {x: 0.5268703, y: 1.7299998, z: -1.306411}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2429,7 +2431,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: -20
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 128
