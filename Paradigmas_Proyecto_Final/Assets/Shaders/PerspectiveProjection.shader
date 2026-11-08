@@ -1,10 +1,15 @@
 
+
 Shader "Custom/PerspectiveProjection"
 {
     Properties
     {
         _ProjectionTex ("Projection Texture", 2D) = "white" {}
         _Opacity ("Opacity", Range(0,1)) = 1
+
+        _OcclusionTex ("Occlusion Positions", 2D) = "black" {}
+        _OcclusionEnabled ("Occlusion Enabled", Float) = 0
+        _OcclusionTolerance ("Occlusion Tolerance", Float) = 0.05
     }
 
     SubShader
@@ -36,9 +41,15 @@ Shader "Custom/PerspectiveProjection"
             TEXTURE2D(_ProjectionTex);
             SAMPLER(sampler_ProjectionTex);
 
+            TEXTURE2D(_OcclusionTex);
+            SAMPLER(sampler_OcclusionTex);
+
             float4x4 _ProjectionVP;
             float _Opacity;
             float _PerspectiveProjectionVisibility;
+
+            float _OcclusionEnabled;
+            float _OcclusionTolerance;
 
             struct Attributes
             {
@@ -83,13 +94,38 @@ Shader "Custom/PerspectiveProjection"
                     uv.y < 0.0 || uv.y > 1.0)
                     discard;
 
+                // Check projection occlusion
+                if (_OcclusionEnabled > 0.5)
+                {
+                    float4 firstHit = SAMPLE_TEXTURE2D(
+                        _OcclusionTex,
+                        sampler_OcclusionTex,
+                        uv
+                    );
+
+                    // No surface was hit by this ray
+                    if (firstHit.a < 0.5)
+                        discard;
+
+                    // Distance between the current fragment
+                    // and the first surface hit
+                    float distanceToFirstHit = distance(
+                        input.positionWS,
+                        firstHit.xyz
+                    );
+
+                    if (distanceToFirstHit > _OcclusionTolerance)
+                        discard;
+                }
+
                 half4 color = SAMPLE_TEXTURE2D(
                     _ProjectionTex,
                     sampler_ProjectionTex,
                     uv
                 );
 
-                color.a *= _Opacity * _PerspectiveProjectionVisibility;
+                color.a *=
+                    _Opacity * _PerspectiveProjectionVisibility;
 
                 if (color.a <= 0.001)
                     discard;
