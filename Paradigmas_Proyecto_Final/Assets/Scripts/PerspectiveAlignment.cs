@@ -3,23 +3,28 @@ using UnityEngine;
 
 public class PerspectiveAlignment : MonoBehaviour
 {
-    [Header("Referencias")]
+    [Header("Camaras")]
     [SerializeField] private Camera playerCamera;
-    [SerializeField] private Transform alignmentPoint;
-    [SerializeField] private GameObject wallDrawing;
+    [SerializeField] private Camera projectionCamera;
+
+    [Header("Objetos")]
+    [SerializeField] private GameObject referenceObject3D;
     [SerializeField] private GameObject hiddenObject3D;
 
     [Header("Tolerancias")]
-    [SerializeField] private float positionTolerance = 0.6f;
-    [SerializeField] private float angleTolerance = 15f;
+    [SerializeField] private float positionTolerance = 0.15f;
+    [SerializeField] private float angleTolerance = 3f;
+
+    private static readonly int ProjectionVisibility =
+        Shader.PropertyToID("_PerspectiveProjectionVisibility");
 
     private bool materialized = false;
 
     private void Start()
     {
         if (playerCamera == null ||
-            alignmentPoint == null ||
-            wallDrawing == null ||
+            projectionCamera == null ||
+            referenceObject3D == null ||
             hiddenObject3D == null)
         {
             Debug.LogError(
@@ -31,12 +36,16 @@ public class PerspectiveAlignment : MonoBehaviour
             return;
         }
 
-        // Estado inicial del puzle
-        wallDrawing.SetActive(true);
+        materialized = false;
+
+        // Estado inicial: proyeccion visible
+        referenceObject3D.SetActive(true);
         hiddenObject3D.SetActive(false);
+
+        SetProjectionVisibility(true);
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (materialized)
             return;
@@ -46,19 +55,18 @@ public class PerspectiveAlignment : MonoBehaviour
 
     private void CheckAlignment()
     {
-        // Distancia entre la camara y el punto correcto
+        // Distancia entre ambas camaras
         float distance = Vector3.Distance(
             playerCamera.transform.position,
-            alignmentPoint.position
+            projectionCamera.transform.position
         );
 
-        // Diferencia entre las orientaciones
+        // Diferencia entre sus orientaciones
         float angle = Quaternion.Angle(
             playerCamera.transform.rotation,
-            alignmentPoint.rotation
+            projectionCamera.transform.rotation
         );
 
-        // Comprobar ambas condiciones
         if (distance <= positionTolerance &&
             angle <= angleTolerance)
         {
@@ -70,12 +78,38 @@ public class PerspectiveAlignment : MonoBehaviour
     {
         materialized = true;
 
-        // Ocultar el dibujo de la pared
-        wallDrawing.SetActive(false);
+        // Copiar la transformacion del objeto de referencia
+        hiddenObject3D.transform.SetPositionAndRotation(
+            referenceObject3D.transform.position,
+            referenceObject3D.transform.rotation
+        );
 
-        // Materializar el objeto 3D
+        hiddenObject3D.transform.localScale =
+            referenceObject3D.transform.lossyScale;
+
+        // Ocultar la proyeccion
+        SetProjectionVisibility(false);
+
+        // Ocultar el objeto de referencia
+        referenceObject3D.SetActive(false);
+
+        // Activar el objeto fisico
         hiddenObject3D.SetActive(true);
 
-        Debug.Log("Objeto materializado correctamente");
+        Debug.Log("Perspective puzzle solved: object materialized.");
+    }
+
+    private void SetProjectionVisibility(bool visible)
+    {
+        Shader.SetGlobalFloat(
+            ProjectionVisibility,
+            visible ? 1f : 0f
+        );
+    }
+
+    private void OnDisable()
+    {
+        // Restaurar el Shader cuando se desactiva el componente
+        SetProjectionVisibility(true);
     }
 }

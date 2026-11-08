@@ -38,6 +38,7 @@ Shader "Custom/PerspectiveProjection"
 
             float4x4 _ProjectionVP;
             float _Opacity;
+            float _PerspectiveProjectionVisibility;
 
             struct Attributes
             {
@@ -88,7 +89,7 @@ Shader "Custom/PerspectiveProjection"
                     uv
                 );
 
-                color.a *= _Opacity;
+                color.a *= _Opacity * _PerspectiveProjectionVisibility;
 
                 if (color.a <= 0.001)
                     discard;
