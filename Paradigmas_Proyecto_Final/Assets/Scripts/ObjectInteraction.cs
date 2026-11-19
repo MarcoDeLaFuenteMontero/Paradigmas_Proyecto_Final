@@ -105,6 +105,13 @@ public class ObjectInteraction : MonoBehaviour
         heldObject.position = ray.GetPoint(targetDistance);
     }
 
+    // Permite retirar un objeto de tutorial sin dejar una referencia agarrada.
+    public void ReleaseIfHolding(GameObject target)
+    {
+        if (target != null && heldObject == target.transform)
+            DropObject();
+    }
+
     private void DropObject()
     {
         heldCollider.enabled = true;

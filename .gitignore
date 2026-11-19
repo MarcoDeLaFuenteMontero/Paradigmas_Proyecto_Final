@@ -34,3 +34,5 @@ Thumbs.db
 *.opendb
 *.VC.db
   
+# Unity captures
+Captures/
