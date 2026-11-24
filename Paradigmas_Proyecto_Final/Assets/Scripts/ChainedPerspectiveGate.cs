@@ -13,7 +13,7 @@ public class ChainedPerspectiveGate : MonoBehaviour
 
     private void Start()
     {
-        closedPosition = door.localPosition;
+        if (door != null) closedPosition = door.localPosition;
         firstBody.isKinematic = true;
         firstBody.useGravity = false;
     }
@@ -30,7 +30,7 @@ public class ChainedPerspectiveGate : MonoBehaviour
             firstBody.isKinematic = false;
             firstBody.useGravity = true;
         }
-        if (IsUnlocked)
+        if (IsUnlocked && door != null)
             door.localPosition = Vector3.MoveTowards(door.localPosition,
                 closedPosition + Vector3.up * 3f, 2.5f * Time.deltaTime);
     }

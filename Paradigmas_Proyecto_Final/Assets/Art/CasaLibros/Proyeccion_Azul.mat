@@ -34,7 +34,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _OcclusionEnabled: 1
-    - _OcclusionTolerance: 0.1
+    - _OcclusionTolerance: 0.16
     - _Opacity: 1
     - _RoomProjectionVisibility: 0
     m_Colors: []

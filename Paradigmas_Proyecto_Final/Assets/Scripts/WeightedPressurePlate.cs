@@ -8,6 +8,8 @@ public class WeightedPressurePlate : MonoBehaviour
     [SerializeField] private float minimumMass = 8f;
     [SerializeField] private float playerMass = 80f;
     [SerializeField] private Vector3 sensingSize = new Vector3(1.12f, 0.34f, 1.12f);
+    [SerializeField] private bool stayOpenAfterPress;
+    private bool latched;
     private Vector3 closedDoor;
     private Vector3 releasedButton;
     private readonly HashSet<Rigidbody> weighedBodies = new HashSet<Rigidbody>();
@@ -18,6 +20,7 @@ public class WeightedPressurePlate : MonoBehaviour
     {
         closedDoor = door.localPosition;
         releasedButton = buttonVisual.localPosition;
+        latched = false;
     }
 
     private void FixedUpdate()
@@ -44,7 +47,8 @@ public class WeightedPressurePlate : MonoBehaviour
             CurrentMass += body.mass;
         }
         IsPressed = CurrentMass >= minimumMass;
-        Vector3 destination = closedDoor + (IsPressed ? Vector3.up * 3f : Vector3.zero);
+        if (stayOpenAfterPress && IsPressed) latched = true;
+        Vector3 destination = closedDoor + (IsPressed || latched ? Vector3.up * 3f : Vector3.zero);
         door.localPosition = Vector3.MoveTowards(door.localPosition, destination, 3.5f * Time.fixedDeltaTime);
         buttonVisual.localPosition = releasedButton + (IsPressed ? Vector3.down * 0.025f : Vector3.zero);
     }
