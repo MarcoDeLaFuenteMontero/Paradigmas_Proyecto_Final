@@ -36,7 +36,7 @@ Material:
     - _OcclusionEnabled: 1
     - _OcclusionTolerance: 0.12
     - _Opacity: 1
-    - _RoomProjectionVisibility: 1
+    - _RoomProjectionVisibility: 0
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -11,6 +11,8 @@ public class RoomPerspectiveAlignment : MonoBehaviour
     [SerializeField] private float positionTolerance = 0.15f;
     [SerializeField] private float angleTolerance = 8f;
     [SerializeField] private RoomPerspectiveAlignment prerequisite;
+    [Tooltip("La pintura se alinea en otro sitio, pero el objeto aparece en su posicion de escena.")]
+    [SerializeField] private bool preservePhysicalPose;
 
     public bool IsMaterialized { get; private set; }
 
@@ -40,9 +42,12 @@ public class RoomPerspectiveAlignment : MonoBehaviour
         if (Quaternion.Angle(playerCamera.transform.rotation, projectionCamera.transform.rotation)
             > angleTolerance) return;
 
-        physicalObject.transform.SetPositionAndRotation(referenceObject.transform.position,
-            referenceObject.transform.rotation);
-        physicalObject.transform.localScale = referenceObject.transform.lossyScale;
+        if (!preservePhysicalPose)
+        {
+            physicalObject.transform.SetPositionAndRotation(referenceObject.transform.position,
+                referenceObject.transform.rotation);
+            physicalObject.transform.localScale = referenceObject.transform.lossyScale;
+        }
         projectionMaterial.SetFloat("_RoomProjectionVisibility", 0f);
         referenceObject.SetActive(false);
         physicalObject.SetActive(true);

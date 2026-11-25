@@ -18,7 +18,7 @@ public class WeightedPressurePlate : MonoBehaviour
 
     private void Start()
     {
-        closedDoor = door.localPosition;
+        closedDoor = door != null ? door.localPosition : Vector3.zero;
         releasedButton = buttonVisual.localPosition;
         latched = false;
     }
@@ -49,7 +49,8 @@ public class WeightedPressurePlate : MonoBehaviour
         IsPressed = CurrentMass >= minimumMass;
         if (stayOpenAfterPress && IsPressed) latched = true;
         Vector3 destination = closedDoor + (IsPressed || latched ? Vector3.up * 3f : Vector3.zero);
-        door.localPosition = Vector3.MoveTowards(door.localPosition, destination, 3.5f * Time.fixedDeltaTime);
+        if (door != null)
+            door.localPosition = Vector3.MoveTowards(door.localPosition, destination, 3.5f * Time.fixedDeltaTime);
         buttonVisual.localPosition = releasedButton + (IsPressed ? Vector3.down * 0.025f : Vector3.zero);
     }
 }
